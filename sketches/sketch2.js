@@ -65,6 +65,17 @@ registerSketch('sk2', function (p) {
       p.line(innerX, innerY, outerX, outerY);
     }
 
+    const swimmerAngle = p.map(timePosition, 0, 60, 0, p.TWO_PI) - p.HALF_PI;
+    const swimmerX = cx + (ringWidth / 2) * p.cos(swimmerAngle);
+    const swimmerY = cy + (ringHeight / 2) * p.sin(swimmerAngle);
+
+    const swimmerSize = Math.min(ringWidth, ringHeight) * 0.05
+    p.push();
+    p.translate(swimmerX, swimmerY);
+    p.rotate(swimmerAngle + p.HALF_PI);
+    p.image(swimmerImg, 0, 0, swimmerSize, swimmerSize);
+    p.pop();
+
   };
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
   
