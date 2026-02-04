@@ -26,13 +26,14 @@ registerSketch('sk2', function (p) {
     p.fill(50, 150, 255);
     p.rect(cx, cy, poolW, poolH, 12);
 
-    const ringDiameter = Math.min(poolW, poolH) * 0.7;
-    const ringThickness = ringDiameter * 0.08;
+    const ringWidth = poolW * 0.8;
+    const ringHeight = poolH * 0.6;
+    const ringThickness = Math.min(ringWidth, ringHeight) * 0.02;
     
     p.noFill();
     p.stroke(255, 220, 0);
     p.strokeWeight(ringThickness);
-    p.ellipse(cx, cy, ringDiameter, ringDiameter);
+    p.ellipse(cx, cy, ringWidth, ringHeight);
   };
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 
