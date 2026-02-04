@@ -1,12 +1,19 @@
 // Instance-mode sketch for tab 2
 registerSketch('sk2', function (p) {
   let startTime;
+  let swimmerImg;
+
+  p.preload = function () {
+    swimmerImg = p.loadImage('../images/swimmer.png');
+  };
 
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
     p.rectMode(p.CENTER);
+    p.imageMode(p.CENTER);
     startTime = p.millis();
   };
+
   p.draw = function () {
     p.background(220);
 
