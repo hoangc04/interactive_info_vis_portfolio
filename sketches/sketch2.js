@@ -23,11 +23,13 @@ registerSketch('sk2', function (p) {
     p.fill(50, 150, 255);
     p.rect(cx, cy, poolW, poolH, 12);
 
-    p.noStroke();
+  
     p.fill(255);
+    p.stroke(255);
+    p.strokeWeight(1);
     const numDashes = 7;
     const dashW = Math.max(10, poolW * 0.03);
-    const dashH = Math.max(2, poolH * 0.02);
+    const dashH = Math.max(6, poolH * 0.04);
     const spacing = dashW * 1.5;
     const startX = cx - (spacing * (numDashes - 1)) / 2;
     for (let i = 0; i < numDashes; i++) p.rect(startX + i * spacing, cy, dashW, dashH, 2);
