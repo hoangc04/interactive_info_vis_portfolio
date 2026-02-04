@@ -12,19 +12,25 @@ registerSketch('sk2', function (p) {
     const marginX = p.width * 0.1;
     const marginY = p.height * 0.1;
     const poolW = p.width - marginX * 2;
-    // choose pool height as a fraction but keep it reasonable on tall screens
+
     const poolH = Math.min(p.height * 0.6, poolW * 0.45);
     const cx = p.width / 2;
     const cy = p.height / 2;
 
-    // pool shadow / border
     p.noStroke();
     p.fill(30, 90, 160, 140);
     p.rect(cx + 6, cy + 8, poolW, poolH, 12);
-
-    // main pool (blue)
     p.fill(50, 150, 255);
     p.rect(cx, cy, poolW, poolH, 12);
+
+    p.noStroke();
+    p.fill(255);
+    const numDashes = 7;
+    const dashW = Math.max(10, poolW * 0.03);
+    const dashH = Math.max(2, poolH * 0.02);
+    const spacing = dashW * 1.5;
+    const startX = cx - (spacing * (numDashes - 1)) / 2;
+    for (let i = 0; i < numDashes; i++) p.rect(startX + i * spacing, cy, dashW, dashH, 2);
   };
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 
