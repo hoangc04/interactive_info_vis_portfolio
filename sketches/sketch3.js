@@ -14,11 +14,14 @@ registerSketch('sk3', function (p) {
 
     const cx = p.width / 2;
     const cy = p.height / 2;
-    const cubeSize = Math.min(p.width, p.height) * 0.3;
 
     const elapsedMillis = p.millis() - startTime;
     const elapsedSeconds = elapsedMillis / 1000;
     const remainingSeconds = Math.max(0, 60 - elapsedSeconds);
+
+    const maxSize = Math.min(p.width, p.height) * 0.3;
+    const meltProgress = remainingSeconds / 60;
+    const cubeSize = maxSize * meltProgress;
 
     p.fill(0);
     p.noStroke();
@@ -26,11 +29,13 @@ registerSketch('sk3', function (p) {
     p.textStyle(p.BOLD);
     p.text(Math.ceil(remainingSeconds) + "s", cx, 60);
 
-    p.noStroke();
-    p.fill(200, 230, 255);
-    p.rect(cx, cy, cubeSize, cubeSize, 10);
-    p.fill(230, 245, 255, 150);
-    p.rect(cx - cubeSize * 0.15, cy - cubeSize * 0.15, cubeSize * 0.4, cubeSize * 0.4, 5);
+    if (cubeSize > 0) {
+      p.noStroke();
+      p.fill(200, 230, 255);
+      p.rect(cx, cy, cubeSize, cubeSize, 10);
+      p.fill(230, 245, 255, 150);
+      p.rect(cx - cubeSize * 0.15, cy - cubeSize * 0.15, cubeSize * 0.4, cubeSize * 0.4, 5);
+    }
   };
 
   p.windowResized = function () { 
