@@ -30,7 +30,7 @@ registerSketch('sk3', function (p) {
     const puddleProgress = 1 - meltProgress;
     const puddleWidth = maxPuddleWidth * puddleProgress;
     const puddleHeight = maxPuddleHeight * puddleProgress;
-    const puddleY = cy + maxSize * 0.3;
+    const puddleY = cy + maxSize * 0.6;
 
     if (cubeSize > 0 && elapsedSeconds - lastDropTime >= 5) {
       const dropStartY = cy + cubeSize / 2;
