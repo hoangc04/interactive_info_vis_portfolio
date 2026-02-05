@@ -70,7 +70,7 @@ registerSketch('sk2', function (p) {
     const topTickY = cy + (ringHeight / 2) * p.sin(topAngle);
     
     const labelOffset = 30;
-    const fontSize = Math.min(ringWidth, ringHeight) * 1;
+    const fontSize = Math.min(ringWidth, ringHeight) * 0.08;
     
     p.fill(255); 
     p.noStroke();
@@ -78,10 +78,10 @@ registerSketch('sk2', function (p) {
     p.textStyle(p.BOLD);
     
     p.textAlign(p.RIGHT, p.CENTER);
-    p.text("Finish", topTickX - labelOffset, topTickY - 40);
+    p.text("Finish", topTickX - labelOffset, topTickY - 50);
     
     p.textAlign(p.LEFT, p.CENTER);
-    p.text("Start", topTickX + labelOffset, topTickY + 40);
+    p.text("Start", topTickX + labelOffset, topTickY + 50);
 
     const swimmerAngle = p.map(timePosition, 0, 60, 0, p.TWO_PI) - p.HALF_PI;
     const swimmerX = cx + (ringWidth / 2) * p.cos(swimmerAngle);
