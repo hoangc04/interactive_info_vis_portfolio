@@ -4,7 +4,7 @@ registerSketch('sk2', function (p) {
   let swimmerImg;
 
   p.preload = function () {
-    swimmerImg = p.loadImage('/images/swimmer_icon.png');
+    swimmerImg = p.loadImage('/interactive_info_vis_portfolio/images/swimmer_icon.png');
   };
 
   p.setup = function () {
