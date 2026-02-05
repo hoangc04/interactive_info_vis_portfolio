@@ -23,11 +23,24 @@ registerSketch('sk3', function (p) {
     const meltProgress = remainingSeconds / 60;
     const cubeSize = maxSize * meltProgress;
 
+    const maxPuddleWidth = maxSize * 2;
+    const maxPuddleHeight = maxSize * 0.4;
+    const puddleProgress = 1 - meltProgress;
+    const puddleWidth = maxPuddleWidth * puddleProgress;
+    const puddleHeight = maxPuddleHeight * puddleProgress;
+
     p.fill(0);
     p.noStroke();
     p.textSize(48);
     p.textStyle(p.BOLD);
     p.text(Math.ceil(remainingSeconds) + "s", cx, 60);
+
+    if (puddleWidth > 0) {
+      p.noStroke();
+      p.fill(150, 200, 230, 180);
+      const puddleY = cy + maxSize * 0.6;
+      p.ellipse(cx, puddleY, puddleWidth, puddleHeight);
+    }
 
     if (cubeSize > 0) {
       p.noStroke();
