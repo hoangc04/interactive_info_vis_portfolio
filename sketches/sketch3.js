@@ -1,8 +1,12 @@
 // Instance-mode sketch for tab 3
 registerSketch('sk3', function (p) {
+  let startTime;
+
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
     p.rectMode(p.CENTER);
+    p.textAlign(p.CENTER, p.CENTER);
+    startTime = p.millis();
   };
 
   p.draw = function () {
@@ -11,6 +15,16 @@ registerSketch('sk3', function (p) {
     const cx = p.width / 2;
     const cy = p.height / 2;
     const cubeSize = Math.min(p.width, p.height) * 0.3;
+
+    const elapsedMillis = p.millis() - startTime;
+    const elapsedSeconds = elapsedMillis / 1000;
+    const remainingSeconds = Math.max(0, 60 - elapsedSeconds);
+
+    p.fill(0);
+    p.noStroke();
+    p.textSize(48);
+    p.textStyle(p.BOLD);
+    p.text(Math.ceil(remainingSeconds) + "s", cx, 60);
 
     p.noStroke();
     p.fill(200, 230, 255);
