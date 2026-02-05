@@ -61,21 +61,23 @@ registerSketch('sk2', function (p) {
       
       const innerX = cx + ((ringWidth / 2) - tickLength) * p.cos(angle);
       const innerY = cy + ((ringHeight / 2) - tickLength) * p.sin(angle);
-      
+
+      p.stroke(255, 255, 255);
+      p.strokeWeight(3);
       p.line(innerX, innerY, outerX, outerY);
 
       if (tickPositions[i] !== 0) {
-        const labelDistance = 40; // distance outside the ring
+        const labelDistance = 40; 
         const labelX = cx + ((ringWidth / 2) + labelDistance) * p.cos(angle);
         const labelY = cy + ((ringHeight / 2) + labelDistance) * p.sin(angle);
     
-        p.fill(255); // white text
+        p.fill(255); 
         p.noStroke();
         p.textSize(Math.min(ringWidth, ringHeight) * 0.04);
         p.textStyle(p.BOLD);
         p.textAlign(p.CENTER, p.CENTER);
         p.text(tickPositions[i], labelX, labelY);
-  }
+      }
     }
 
     const topAngle = p.map(0, 0, 60, 0, p.TWO_PI) - p.HALF_PI;
