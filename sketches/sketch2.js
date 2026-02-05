@@ -69,7 +69,7 @@ registerSketch('sk2', function (p) {
     const swimmerX = cx + (ringWidth / 2) * p.cos(swimmerAngle);
     const swimmerY = cy + (ringHeight / 2) * p.sin(swimmerAngle);
 
-    const swimmerSize = Math.min(ringWidth, ringHeight) * 0.20
+    const swimmerSize = Math.min(ringWidth, ringHeight) * 3.0;
     p.push();
     p.translate(swimmerX, swimmerY);
     p.rotate(swimmerAngle + p.HALF_PI);
