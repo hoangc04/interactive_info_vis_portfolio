@@ -1,16 +1,10 @@
 // Instance-mode sketch for tab 2
 registerSketch('sk2', function (p) {
   let startTime;
-  let swimmerImg;
-
-  p.preload = function () {
-    swimmerImg = p.loadImage('/images/swimmer_icon.png');
-  };
 
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
     p.rectMode(p.CENTER);
-    p.imageMode(p.CENTER);
     startTime = p.millis();
   };
 
@@ -65,16 +59,17 @@ registerSketch('sk2', function (p) {
       p.line(innerX, innerY, outerX, outerY);
     }
 
-    const swimmerAngle = p.map(timePosition, 0, 60, 0, p.TWO_PI) - p.HALF_PI;
-    const swimmerX = cx + (ringWidth / 2) * p.cos(swimmerAngle);
-    const swimmerY = cy + (ringHeight / 2) * p.sin(swimmerAngle);
+    if (elapsedMinutes < 60) {
+      const swimmerAngle = p.map(elapsedMinutes, 0, 60, 0, p.TWO_PI) - p.HALF_PI;
+      const swimmerX = cx + (ringWidth / 2) * p.cos(swimmerAngle);
+      const swimmerY = cy + (ringHeight / 2) * p.sin(swimmerAngle);
 
-    const swimmerSize = Math.min(ringWidth, ringHeight) * 0.05
-    p.push();
-    p.translate(swimmerX, swimmerY);
-    p.rotate(swimmerAngle + p.HALF_PI);
-    p.image(swimmerImg, 0, 0, swimmerSize, swimmerSize);
-    p.pop();
+      // draw black dot as swimmer
+      const swimmerSize = Math.min(ringWidth, ringHeight) * 0.05;
+      p.noStroke();
+      p.fill(0);
+      p.ellipse(swimmerX, swimmerY, swimmerSize, swimmerSize);
+    }
 
   };
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
