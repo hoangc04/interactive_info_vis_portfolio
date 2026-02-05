@@ -28,7 +28,32 @@ registerSketch('sk3', function (p) {
     const puddleProgress = 1 - meltProgress;
     const puddleWidth = maxPuddleWidth * puddleProgress;
     const puddleHeight = maxPuddleHeight * puddleProgress;
+    const puddleY = cy + maxSize * 0.3;
 
+    if (cubeSize > 0 && elapsedSeconds - lastDropTime >= 5) {
+      const dropStartY = cy + cubeSize / 2;
+      drops.push({
+        x: cx,
+        y: dropStartY,
+        targetY: puddleY
+      });
+      lastDropTime = elapsedSeconds;
+    }
+
+    for (let i = drops.length - 1; i >= 0; i--) {
+      let drop = drops[i];
+      drop.y += 3;
+      
+      p.noStroke();
+      p.fill(150, 200, 230, 200);
+      p.ellipse(drop.x, drop.y, 8, 12);
+      
+      if (drop.y >= drop.targetY) {
+        drops.splice(i, 1);
+      }
+    }
+
+    //Timer
     p.fill(0);
     p.noStroke();
     p.textSize(48);
@@ -38,7 +63,6 @@ registerSketch('sk3', function (p) {
     if (puddleWidth > 0) {
       p.noStroke();
       p.fill(150, 200, 230, 180);
-      const puddleY = cy + maxSize * 0.6;
       p.ellipse(cx, puddleY, puddleWidth, puddleHeight);
     }
 
