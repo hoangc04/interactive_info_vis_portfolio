@@ -24,7 +24,11 @@ registerSketch('sk2', function (p) {
     const cx = p.width / 2;
     const cy = p.height / 2;
 
+    const borderWidth = 8;
+    p.fill(255);
     p.noStroke();
+    p.rect(cx, cy, poolW + borderWidth * 2, poolH + borderWidth * 2, 12);
+
     p.fill(30, 90, 160, 140);
     p.rect(cx + 6, cy + 8, poolW, poolH, 12);
 
