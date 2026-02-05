@@ -1,6 +1,8 @@
 // Instance-mode sketch for tab 3
 registerSketch('sk3', function (p) {
   let startTime;
+  let drops = [];
+  let lastDropTime = 0;
 
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
