@@ -65,6 +65,23 @@ registerSketch('sk2', function (p) {
       p.line(innerX, innerY, outerX, outerY);
     }
 
+    const topAngle = p.map(0, 0, 60, 0, p.TWO_PI) - p.HALF_PI;
+    const topTickX = cx + (ringWidth / 2) * p.cos(topAngle);
+    const topTickY = cy + (ringHeight / 2) * p.sin(topAngle);
+    
+    const labelOffset = 30;
+    const fontSize = Math.min(ringWidth, ringHeight) * 0.04;
+    
+    p.fill(255); 
+    p.noStroke();
+    p.textSize(fontSize);
+    
+    p.textAlign(p.RIGHT, p.CENTER);
+    p.text("Finish", topTickX - labelOffset, topTickY);
+    
+    p.textAlign(p.LEFT, p.CENTER);
+    p.text("Start", topTickX + labelOffset, topTickY);
+
     const swimmerAngle = p.map(timePosition, 0, 60, 0, p.TWO_PI) - p.HALF_PI;
     const swimmerX = cx + (ringWidth / 2) * p.cos(swimmerAngle);
     const swimmerY = cy + (ringHeight / 2) * p.sin(swimmerAngle);
