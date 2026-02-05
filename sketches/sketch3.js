@@ -2,13 +2,17 @@
 registerSketch('sk3', function (p) {
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
+    p.rectMode(p.CENTER)
   };
   p.draw = function () {
-    p.background(240, 200, 200);
-    p.fill(180, 60, 60);
-    p.textSize(32);
-    p.textAlign(p.CENTER, p.CENTER);
-    p.text('HWK #4. B', p.width / 2, p.height / 2);
+    // Ice cube
+    p.background(240);
+    p.fill(200, 230, 255);
+    p.rect(cx, cy, cubeSize, cubeSize, 10);
+    p.fill(230, 245, 255, 150);
+    p.rect(cx - cubeSize * 0.15, cy - cubeSize * 0.15, cubeSize * 0.4, cubeSize * 0.4, 5);
+
   };
+
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 });
