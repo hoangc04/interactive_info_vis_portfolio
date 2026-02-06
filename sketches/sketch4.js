@@ -1,10 +1,16 @@
 // Instance-mode sketch for tab 4
 registerSketch('sk4', function (p) {
   let startTime;
+  let stationImg;
+
+  p.preload = function () {
+    stationImg = p.loadImage(`images/station.png`);
+  };
 
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
     p.textAlign(p.CENTER, p.CENTER);
+    p.imageMode(p.CENTER);
     startTime = p.millis();
   };
   p.draw = function () {
@@ -61,11 +67,11 @@ registerSketch('sk4', function (p) {
 
     const station1X = cx;
     const station2X = p.width * 0.9 - 50;
-    const stationY = trackY - 60;
+    const stationY = trackY - 30;
+    const stationSize = 100;
 
-    p.fill(150, 50, 50); 
-    p.rect(station1X - 25, stationY, 50, 60);
-    p.rect(station2X - 25, stationY, 50, 60);
+    p.image(stationImg, station1X, stationY, stationSize, stationSize);
+    p.image(stationImg, station2X, stationY, stationSize, stationSize);
 
     p.fill(0);
     p.textAlign(p.CENTER);
