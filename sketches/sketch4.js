@@ -24,6 +24,18 @@ registerSketch('sk4', function (p) {
     for (let x = p.width * 0.1; x < p.width * 0.9; x += tieSpacing) {
       p.rect(x, trackY - tieHeight / 4, tieWidth, tieHeight);
     }
+
+    p.fill(150, 50, 50); 
+    p.rect(station1X - 25, stationY, 50, 60);
+    p.rect(station2X - 25, stationY, 50, 60);
+
+    // Station labels
+    p.fill(0);
+    p.textAlign(p.CENTER);
+    p.textSize(16);
+    p.text("Station 1", station1X, stationY - 10);
+    p.text("Final Station", station2X, stationY - 10);
+
   };
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 });
