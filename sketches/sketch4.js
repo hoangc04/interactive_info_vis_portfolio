@@ -27,6 +27,16 @@ registerSketch('sk4', function (p) {
     p.textStyle(p.BOLD);
     p.text(timeDisplay, cx, 60);
 
+    let phase = "";
+    if (elapsedSeconds < 180) {
+      phase = "Travel to Station 1";
+    } else if (elapsedSeconds < 240) {
+      phase = "Break at Station 1";
+    } else if (elapsedSeconds < 420) {
+      phase = "Travel to Station 2";
+    } else {
+      phase = "Arrived at Station 2";
+    }
 
     p.textSize(24);
     p.textStyle(p.NORMAL);
@@ -49,11 +59,14 @@ registerSketch('sk4', function (p) {
       p.rect(x, trackY - tieHeight / 4, tieWidth, tieHeight);
     }
 
+    const station1X = cx;
+    const station2X = p.width * 0.9 - 50;
+    const stationY = trackY - 60;
+
     p.fill(150, 50, 50); 
     p.rect(station1X - 25, stationY, 50, 60);
     p.rect(station2X - 25, stationY, 50, 60);
 
-    // Station labels
     p.fill(0);
     p.textAlign(p.CENTER);
     p.textSize(16);
