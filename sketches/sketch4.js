@@ -1,13 +1,37 @@
 // Instance-mode sketch for tab 4
 registerSketch('sk4', function (p) {
+  let startTime;
+
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
+    p.textAlign(p.CENTER, p.CENTER);
+    startTime = p.millis();
   };
   p.draw = function () {
     p.background(200, 220, 240);
 
     const cx = p.width / 2;
     const cy = p.height / 2;
+
+    const elapsedMillis = p.millis() - startTime;
+    const elapsedSeconds = elapsedMillis / 1000;
+    const totalDuration = 7 * 60;
+    const remainingSeconds = Math.max(0, totalDuration - elapsedSeconds);
+
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = Math.floor(remainingSeconds % 60);
+    const timeDisplay = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+
+    p.fill(0);
+    p.textSize(48);
+    p.textStyle(p.BOLD);
+    p.text(timeDisplay, cx, 60);
+
+
+    p.textSize(24);
+    p.textStyle(p.NORMAL);
+    p.text(phase, cx, 110);
+
     const trackWidth = p.width * 0.8;
     const trackHeight = 20;
     const trackY = cy + 50; 
@@ -37,5 +61,6 @@ registerSketch('sk4', function (p) {
     p.text("Final Station", station2X, stationY - 10);
 
   };
+
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 });
