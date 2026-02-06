@@ -2,9 +2,11 @@
 registerSketch('sk4', function (p) {
   let startTime;
   let stationImg;
+  let trainImg;
 
   p.preload = function () {
     stationImg = p.loadImage(`images/trainstation.png`);
+    trainImg = p.loadImage('images/train.png');
   };
 
   p.setup = function () {
@@ -33,24 +35,40 @@ registerSketch('sk4', function (p) {
     p.textStyle(p.BOLD);
     p.text(timeDisplay, cx, 60);
 
+    const trackWidth = p.width * 0.8;
+    const trackHeight = 20;
+    const trackY = cy + 50;
+    const trackStartX = p.width * 0.1;
+    const trackEndX = p.width * 0.9;
+
+    const station1X = cx;
+    const station2X = p.width * 0.9 - 50;
+    const stationY = trackY - 30;
+    const stationSize = 100;
+
+    let trainX = trackStartX;
     let phase = "";
+
+
     if (elapsedSeconds < 180) {
       phase = "Travel to Station 1";
+      const progress = elapsedSeconds / 180; // 0.0 to 1.0
+      trainX = p.lerp(trackStartX, station1X, progress);
     } else if (elapsedSeconds < 240) {
       phase = "Break at Station 1";
+      trainX = station1X;
     } else if (elapsedSeconds < 420) {
-      phase = "Travel to Station 2";
+      phase = "Travel to Final Station";
+      const progress = (elapsedSeconds - 240) / 180; // 0.0 to 1.0
+      trainX = p.lerp(station1X, station2X, progress);
     } else {
-      phase = "Arrived at Station 2";
+      phase = "Arrived at Final Station";
+      trainX = station2X;
     }
 
     p.textSize(24);
     p.textStyle(p.NORMAL);
     p.text(phase, cx, 110);
-
-    const trackWidth = p.width * 0.8;
-    const trackHeight = 20;
-    const trackY = cy + 50; 
 
     p.fill(80, 70, 60);
     p.noStroke();
@@ -65,19 +83,24 @@ registerSketch('sk4', function (p) {
       p.rect(x, trackY - tieHeight / 4, tieWidth, tieHeight);
     }
 
-    const station1X = cx;
-    const station2X = p.width * 0.9 - 50;
-    const stationY = trackY - 30;
-    const stationSize = 100;
-
+    p.push();
+    p.imageMode(p.CENTER);
     p.image(stationImg, station1X, stationY, stationSize, stationSize);
     p.image(stationImg, station2X, stationY, stationSize, stationSize);
+    p.pop();
 
     p.fill(0);
     p.textAlign(p.CENTER);
     p.textSize(16);
     p.text("Station 1", station1X, stationY - 10);
     p.text("Final Station", station2X, stationY - 10);
+
+    const trainSize = 80;
+    const trainY = trackY - 20;
+    p.push();
+    p.imageMode(p.CENTER);
+    p.image(trainImg, trainX, trainY, trainSize, trainSize);
+    p.pop();
 
   };
 
