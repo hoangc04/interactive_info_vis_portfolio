@@ -92,10 +92,10 @@ registerSketch('sk4', function (p) {
     p.fill(0);
     p.textAlign(p.CENTER);
     p.textSize(16);
-    p.text("Station 1", station1X, stationY - 10);
-    p.text("Final Station", station2X, stationY - 10);
+    p.text("Station 1", station1X, trackY + 40);
+    p.text("Final Station", station2X, trackY + 40);
 
-    const trainSize = 80;
+    const trainSize = 160;
     const trainY = trackY - 20;
     p.push();
     p.imageMode(p.CENTER);
