@@ -4,7 +4,7 @@ registerSketch('sk4', function (p) {
   let stationImg;
 
   p.preload = function () {
-    stationImg = p.loadImage(`images/train-station.png`);
+    stationImg = p.loadImage(`images/train-station.jpg`);
   };
 
   p.setup = function () {
