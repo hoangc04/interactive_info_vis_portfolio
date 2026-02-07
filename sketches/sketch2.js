@@ -71,7 +71,7 @@ registerSketch('sk2', function (p) {
       adjustedTime = 2700 + (elapsedSeconds - 3600);
     }
     
-    const timePosition = (elapsedSeconds / 60) % 60;
+    const timePosition = (adjustedTime / 60) % 60;
 
     if (isOnBreak) {
       const breakMinutes = Math.floor(breakTimeRemaining / 60);
