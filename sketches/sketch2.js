@@ -46,9 +46,48 @@ registerSketch('sk2', function (p) {
     
     const elapsedMillis = p.millis() - startTime;
     const elapsedSeconds = elapsedMillis / 1000;
-    
 
+    let adjustedTime = elapsedSeconds;
+    let isOnBreak = false;
+    let breakTimeRemaining = 0;
+
+    if (elapsedSeconds >= 900 && elapsedSeconds < 1200) {
+      isOnBreak = true;
+      breakTimeRemaining = 300 - (elapsedSeconds - 900);
+      adjustedTime = 900;
+    } else if (elapsedSeconds >= 1200 && elapsedSeconds < 2100) {
+      adjustedTime = 900 + (elapsedSeconds - 1200);
+    } else if (elapsedSeconds >= 2100 && elapsedSeconds < 2400) {
+      isOnBreak = true;
+      breakTimeRemaining = 300 - (elapsedSeconds - 2100);
+      adjustedTime = 1800;
+    } else if (elapsedSeconds >= 2400 && elapsedSeconds < 3300) {
+      adjustedTime = 1800 + (elapsedSeconds - 2400);
+    } else if (elapsedSeconds >= 3300 && elapsedSeconds < 3600) {
+      isOnBreak = true;
+      breakTimeRemaining = 300 - (elapsedSeconds - 3300);
+      adjustedTime = 2700;
+    } else if (elapsedSeconds >= 3600) {
+      adjustedTime = 2700 + (elapsedSeconds - 3600);
+    }
+    
     const timePosition = (elapsedSeconds / 60) % 60;
+
+    if (isOnBreak) {
+      const breakMinutes = Math.floor(breakTimeRemaining / 60);
+      const breakSeconds = Math.floor(breakTimeRemaining % 60);
+      const breakDisplay = "Break: " + breakMinutes + ":" + (breakSeconds < 10 ? "0" : "") + breakSeconds;
+      
+      p.fill(255, 100, 100);
+      p.noStroke();
+      p.rect(cx, cy - poolH / 2 - 60, 200, 50, 10);
+      
+      p.fill(255); 
+      p.textSize(24);
+      p.textStyle(p.BOLD);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.text(breakDisplay, cx, cy - poolH / 2 - 60);
+    }
 
     // tick marks at 0, 15, 30, 45 minutes
     const tickPositions = [0, 15, 30, 45]; // minutes
