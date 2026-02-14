@@ -162,11 +162,31 @@ registerSketch('sk5', function (p) {
 
     p.fill(0);
     p.noStroke();
-    p.textAlign(p.LEFT, p.BOTTOM);
-    p.textSize(12);
+    p.textAlign(p.LEFT, p.TOP);
+    p.textSize(11);
     p.textStyle(p.ITALIC);
-    p.text("Majority of regions peak in insurance costs at older ages, with SE being a single outlier, peaking at 19.", 
-       highlightX1 + 5, highlightY1 - 5);
+
+    const annotationText = "Majority of regions peak in insurance costs at older ages, with SE being a single outlier, peaking at 19.";
+    const boxWidth = highlightX2 - highlightX1 - 10;
+
+    const words = annotationText.split(' ');
+    let line = '';
+    let yOffset = highlightY1 + 5;
+
+    for (let i = 0; i < words.length; i++) {
+      const testLine = line + words[i] + ' ';
+      const testWidth = p.textWidth(testLine);
+  
+      if (testWidth > boxWidth && line.length > 0) {
+        p.text(line, highlightX1 + 5, yOffset);
+        line = words[i] + ' ';
+        yOffset += 14;
+     } else {
+        line = testLine;
+      }
+    }
+    p.text(line, highlightX1 + 5, yOffset); 
+
     p.textStyle(p.NORMAL);
 
     hoveredPoint = null;
