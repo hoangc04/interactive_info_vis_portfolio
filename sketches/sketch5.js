@@ -7,7 +7,8 @@ registerSketch('sk5', function (p) {
     'northeast': [100, 200, 100],  // green
     'northwest': [255, 180, 100]   // orange
   };
-  let hoveredPoint = null; // Store hovered point info
+  let hoveredPoint = null;
+  let maxPoints = {};
 
   p.preload = function () {
     insuranceData = p.loadTable('insurance.csv', 'csv', 'header');
@@ -48,6 +49,21 @@ registerSketch('sk5', function (p) {
         processedData[region][age] = data.total / data.count;
       }
     });
+  }
+
+  function drawStar(x, y, radius1, radius2, npoints) {
+    let angle = p.TWO_PI / npoints;
+    let halfAngle = angle / 2.0;
+    p.beginShape();
+    for (let a = -p.HALF_PI; a < p.TWO_PI - p.HALF_PI; a += angle) {
+      let sx = x + p.cos(a) * radius2;
+      let sy = y + p.sin(a) * radius2;
+      p.vertex(sx, sy);
+      sx = x + p.cos(a + halfAngle) * radius1;
+      sy = y + p.sin(a + halfAngle) * radius1;
+      p.vertex(sx, sy);
+    }
+    p.endShape(p.CLOSE);
   }
 
   p.draw = function () {
@@ -132,13 +148,38 @@ registerSketch('sk5', function (p) {
     p.textAlign(p.CENTER, p.TOP);
     p.textSize(24);
     p.textStyle(p.BOLD);
-    p.text("Medical Insurance Doesn't Just Go Up With Age - It's Also Where You Live", p.width / 2, 20);
+    p.text("Average Insurance Cost by Age and Region", p.width / 2, 20);
     p.textStyle(p.NORMAL);
 
-    // Reset hovered point
     hoveredPoint = null;
+    maxPoints = {};
     const hoverRadius = 10;
 
+    regions.forEach(region => {
+      const ages = Object.keys(processedData[region]).map(Number);
+      let maxCostForRegion = -Infinity;
+      let maxAgeForRegion = 0;
+      
+      ages.forEach(age => {
+        const cost = processedData[region][age];
+        if (cost > maxCostForRegion) {
+          maxCostForRegion = cost;
+          maxAgeForRegion = age;
+        }
+      });
+
+      const maxX = p.map(maxAgeForRegion, minAge, maxAge, marginLeft, p.width - marginRight);
+      const maxY = p.map(maxCostForRegion, minCost, maxCost, p.height - marginBottom, marginTop);
+      
+      maxPoints[region] = {
+        age: maxAgeForRegion,
+        cost: maxCostForRegion,
+        x: maxX,
+        y: maxY
+      };
+    });
+
+    // Draw lines and detect hover
     regions.forEach(region => {
       const ages = Object.keys(processedData[region]).map(Number).sort((a, b) => a - b);
       const color = regionColors[region];
@@ -162,43 +203,29 @@ registerSketch('sk5', function (p) {
             region: region,
             x: x,
             y: y,
-            color: color
+            color: color,
+            isMax: (age === maxPoints[region].age)
           };
         }
       });
       p.endShape();
+    });
 
-      let maxCostForRegion = -Infinity;
-      let maxAgeForRegion = 0;
+    regions.forEach(region => {
+      const maxPt = maxPoints[region];
       
-      ages.forEach(age => {
-        const cost = processedData[region][age];
-        if (cost > maxCostForRegion) {
-          maxCostForRegion = cost;
-          maxAgeForRegion = age;
-        }
-      });
-
-      const maxX = p.map(maxAgeForRegion, minAge, maxAge, marginLeft, p.width - marginRight);
-      const maxY = p.map(maxCostForRegion, minCost, maxCost, p.height - marginBottom, marginTop);
-      
-      p.fill(color[0], color[1], color[2]);
-      p.noStroke();
-      p.ellipse(maxX, maxY, 12, 12);
-      
-      p.fill(0);
-      p.textSize(12);
-      p.textAlign(p.LEFT, p.CENTER);
-      p.text(`Age ${maxAgeForRegion}: $${Math.round(maxCostForRegion)}`, maxX + 10, maxY);
+      p.fill(255, 215, 0);
+      p.stroke(200, 170, 0);
+      p.strokeWeight(2);
+      drawStar(maxPt.x, maxPt.y, 6, 12, 5);
     });
 
     if (hoveredPoint) {
       const tooltipX = hoveredPoint.x;
-      const tooltipY = hoveredPoint.y - 40;
+      const tooltipY = hoveredPoint.y - 60;
       const tooltipWidth = 150;
       const tooltipHeight = 50;
       
-      // Tooltip box
       p.fill(255);
       p.stroke(0);
       p.strokeWeight(1);
@@ -222,9 +249,11 @@ registerSketch('sk5', function (p) {
       p.text(`Age: ${hoveredPoint.age}`, tooltipX, tooltipY + 20);
       p.text(`Cost: $${Math.round(hoveredPoint.cost).toLocaleString()}`, tooltipX, tooltipY + 35);
       
-      p.fill(hoveredPoint.color[0], hoveredPoint.color[1], hoveredPoint.color[2]);
-      p.noStroke();
-      p.ellipse(hoveredPoint.x, hoveredPoint.y, 10, 10);
+      if (!hoveredPoint.isMax) {
+        p.fill(hoveredPoint.color[0], hoveredPoint.color[1], hoveredPoint.color[2]);
+        p.noStroke();
+        p.ellipse(hoveredPoint.x, hoveredPoint.y, 10, 10);
+      }
     }
 
     const legendX = p.width - marginRight + 20;
