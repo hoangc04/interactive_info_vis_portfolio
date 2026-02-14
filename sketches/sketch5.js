@@ -151,6 +151,15 @@ registerSketch('sk5', function (p) {
     p.text("Average Insurance Cost by Age and Region", p.width / 2, 20);
     p.textStyle(p.NORMAL);
 
+    const highlightX1 = p.map(50, minAge, maxAge, marginLeft, p.width - marginRight);
+    const highlightX2 = p.map(maxAge, minAge, maxAge, marginLeft, p.width - marginRight);
+    const highlightY1 = p.map(35000, minCost, maxCost, p.height - marginBottom, marginTop);
+    const highlightY2 = p.map(20000, minCost, maxCost, p.height - marginBottom, marginTop);
+    
+    p.fill(255, 192, 203, 80);
+    p.noStroke();
+    p.rect(highlightX1, highlightY1, highlightX2 - highlightX1, highlightY2 - highlightY1);
+
     hoveredPoint = null;
     maxPoints = {};
     const hoverRadius = 10;
@@ -179,7 +188,6 @@ registerSketch('sk5', function (p) {
       };
     });
 
-    // Draw lines and detect hover
     regions.forEach(region => {
       const ages = Object.keys(processedData[region]).map(Number).sort((a, b) => a - b);
       const color = regionColors[region];
@@ -211,11 +219,12 @@ registerSketch('sk5', function (p) {
       p.endShape();
     });
 
+    // Draw yellow stars at max points
     regions.forEach(region => {
       const maxPt = maxPoints[region];
       
-      p.fill(255, 215, 0);
-      p.stroke(200, 170, 0);
+      p.fill(255, 215, 0); // yellow/gold
+      p.stroke(200, 170, 0); // darker yellow outline
       p.strokeWeight(2);
       drawStar(maxPt.x, maxPt.y, 6, 12, 5);
     });
@@ -226,6 +235,7 @@ registerSketch('sk5', function (p) {
       const tooltipWidth = 150;
       const tooltipHeight = 50;
       
+      // Tooltip box
       p.fill(255);
       p.stroke(0);
       p.strokeWeight(1);
@@ -248,7 +258,7 @@ registerSketch('sk5', function (p) {
       p.textStyle(p.NORMAL);
       p.text(`Age: ${hoveredPoint.age}`, tooltipX, tooltipY + 20);
       p.text(`Cost: $${Math.round(hoveredPoint.cost).toLocaleString()}`, tooltipX, tooltipY + 35);
-      
+
       if (!hoveredPoint.isMax) {
         p.fill(hoveredPoint.color[0], hoveredPoint.color[1], hoveredPoint.color[2]);
         p.noStroke();
