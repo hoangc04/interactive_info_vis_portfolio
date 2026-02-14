@@ -9,7 +9,7 @@ registerSketch('sk5', function (p) {
   };
 
   p.preload = function () {
-    insuranceData = p.loadTable('insurance.csv', 'csv', 'header');
+    insuranceData = p.loadTable('../insurance.csv', 'csv', 'header');
   };
 
   p.setup = function () {
@@ -52,10 +52,10 @@ registerSketch('sk5', function (p) {
   p.draw = function () {
     p.background(250);
 
-    const marginLeft = 80;
+    const marginLeft = 100;
     const marginRight = 200;
     const marginTop = 80;
-    const marginBottom = 80;
+    const marginBottom = 100;
     const chartWidth = p.width - marginLeft - marginRight;
     const chartHeight = p.height - marginTop - marginBottom;
 
@@ -76,22 +76,56 @@ registerSketch('sk5', function (p) {
       maxCost = Math.max(maxCost, ...costs);
     });
 
+    minCost = Math.floor(minCost / 5000) * 5000;
+    maxCost = Math.ceil(maxCost / 5000) * 5000;
+
+    p.stroke(220);
+    p.strokeWeight(1);
+    p.fill(100);
+    p.textAlign(p.RIGHT, p.CENTER);
+    p.textSize(12);
+    
+    const costStep = 5000;
+    for (let cost = minCost; cost <= maxCost; cost += costStep) {
+      const y = p.map(cost, minCost, maxCost, p.height - marginBottom, marginTop);
+      
+      p.stroke(220);
+      p.line(marginLeft, y, p.width - marginRight, y);
+      
+      p.noStroke();
+      p.text('$' + (cost / 1000) + 'k', marginLeft - 10, y);
+    }
+
+    p.textAlign(p.CENTER, p.TOP);
+    const ageStep = 5;
+    
+    for (let age = Math.ceil(minAge / ageStep) * ageStep; age <= maxAge; age += ageStep) {
+      const x = p.map(age, minAge, maxAge, marginLeft, p.width - marginRight);
+      
+      p.stroke(220);
+      p.line(x, marginTop, x, p.height - marginBottom);
+      
+      p.noStroke();
+      p.fill(100);
+      p.text(age, x, p.height - marginBottom + 10);
+    }
+
     p.stroke(0);
     p.strokeWeight(2);
-    p.line(marginLeft, marginTop, marginLeft, p.height - marginBottom); // y-axis
-    p.line(marginLeft, p.height - marginBottom, p.width - marginRight, p.height - marginBottom); // x-axis
+    p.line(marginLeft, marginTop, marginLeft, p.height - marginBottom);
+    p.line(marginLeft, p.height - marginBottom, p.width - marginRight, p.height - marginBottom);
 
     p.fill(0);
     p.noStroke();
     p.textAlign(p.CENTER, p.TOP);
     p.textSize(16);
-    p.text("Age", (marginLeft + p.width - marginRight) / 2, p.height - marginBottom + 40);
+    p.text("Age (years)", (marginLeft + p.width - marginRight) / 2, p.height - marginBottom + 50);
     
     p.push();
     p.translate(20, (marginTop + p.height - marginBottom) / 2);
     p.rotate(-p.HALF_PI);
     p.textAlign(p.CENTER, p.TOP);
-    p.text("Average Insurance Cost ($)", 0, 0);
+    p.text("Average Insurance Cost", 0, 0);
     p.pop();
 
     p.textAlign(p.CENTER, p.TOP);
@@ -134,6 +168,7 @@ registerSketch('sk5', function (p) {
       p.fill(color[0], color[1], color[2]);
       p.noStroke();
       p.ellipse(maxX, maxY, 12, 12);
+      
       p.fill(0);
       p.textSize(12);
       p.textAlign(p.LEFT, p.CENTER);
@@ -165,6 +200,7 @@ registerSketch('sk5', function (p) {
       p.fill(color[0], color[1], color[2]);
       p.noStroke();
       p.rect(legendX, legendY, 20, 20);
+      
       p.fill(0);
       p.textSize(14);
       p.textAlign(p.LEFT, p.TOP);
