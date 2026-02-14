@@ -151,6 +151,12 @@ registerSketch('sk5', function (p) {
     p.text("Average Insurance Cost by Age and Region", p.width / 2, 20);
     p.textStyle(p.NORMAL);
 
+    p.textSize(16);
+    p.textStyle(p.BOLD);
+    p.text("Across regional demographics, medical insurance costs can vary,", p.width / 2, 55);
+    p.text("indicating health economic dependency on regional location.", p.width / 2, 75);
+    p.textStyle(p.NORMAL);
+
     const highlightX1 = p.map(50, minAge, maxAge, marginLeft, p.width - marginRight);
     const highlightX2 = p.map(maxAge, minAge, maxAge, marginLeft, p.width - marginRight);
     const highlightY1 = p.map(35000, minCost, maxCost, p.height - marginBottom, marginTop);
