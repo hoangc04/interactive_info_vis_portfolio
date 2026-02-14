@@ -266,7 +266,7 @@ registerSketch('sk5', function (p) {
       p.fill(0);
       p.noStroke();
       p.textAlign(p.LEFT, p.BOTTOM);
-      p.textSize(11);
+      p.textSize(14);
       p.textStyle(p.ITALIC);
       p.text("SE has the highest", seMaxPt.x + 45, seMaxPt.y - 30);
       p.text("insurance cost", seMaxPt.x + 45, seMaxPt.y - 17);
