@@ -9,7 +9,7 @@ registerSketch('sk5', function (p) {
   };
 
   p.preload = function () {
-    insuranceData = p.loadTable('../insurance.csv', 'csv', 'header');
+    insuranceData = p.loadTable('insurance.csv', 'csv', 'header');
   };
 
   p.setup = function () {
