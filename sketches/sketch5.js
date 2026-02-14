@@ -160,6 +160,15 @@ registerSketch('sk5', function (p) {
     p.noStroke();
     p.rect(highlightX1, highlightY1, highlightX2 - highlightX1, highlightY2 - highlightY1);
 
+    p.fill(0);
+    p.noStroke();
+    p.textAlign(p.LEFT, p.BOTTOM);
+    p.textSize(12);
+    p.textStyle(p.ITALIC);
+    p.text("Majority of regions peak in insurance costs at older ages, with SE being a single outlier, peaking at 19.", 
+       highlightX1 + 5, highlightY1 - 5);
+    p.textStyle(p.NORMAL);
+
     hoveredPoint = null;
     maxPoints = {};
     const hoverRadius = 10;
