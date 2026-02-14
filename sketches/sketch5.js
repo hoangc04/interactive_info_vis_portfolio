@@ -153,7 +153,7 @@ registerSketch('sk5', function (p) {
 
     p.textSize(16);
     p.textStyle(p.BOLD);
-    p.text("Across regional demographics, medical insurance costs can vary,", p.width / 2, 55);
+    p.text("Across regional demographics, average medical insurance costs can vary,", p.width / 2, 55);
     p.text("indicating health economic dependency on regional location.", p.width / 2, 75);
     p.textStyle(p.NORMAL);
 
