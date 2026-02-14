@@ -148,7 +148,7 @@ registerSketch('sk5', function (p) {
     p.textAlign(p.CENTER, p.TOP);
     p.textSize(24);
     p.textStyle(p.BOLD);
-    p.text("Average Insurance Cost by Age and Region", p.width / 2, 20);
+    p.text("Medical Insurance Costs Based on Your Region", p.width / 2, 20);
     p.textStyle(p.NORMAL);
 
     p.textSize(16);
