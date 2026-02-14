@@ -163,7 +163,7 @@ registerSketch('sk5', function (p) {
     p.fill(0);
     p.noStroke();
     p.textAlign(p.LEFT, p.TOP);
-    p.textSize(11);
+    p.textSize(15);
     p.textStyle(p.ITALIC);
 
     const annotationText = "Majority of regions peak in insurance costs at older ages, with SE being a single outlier, peaking at 19.";
