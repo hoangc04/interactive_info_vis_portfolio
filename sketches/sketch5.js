@@ -258,6 +258,21 @@ registerSketch('sk5', function (p) {
       drawStar(maxPt.x, maxPt.y, 6, 12, 5);
     });
 
+    const seMaxPt = maxPoints['southeast'];
+    if (seMaxPt) {
+      p.stroke(0);
+      p.strokeWeight(1);
+      p.line(seMaxPt.x, seMaxPt.y, seMaxPt.x - 40, seMaxPt.y - 30);
+      p.fill(0);
+      p.noStroke();
+      p.textAlign(p.RIGHT, p.BOTTOM);
+      p.textSize(11);
+      p.textStyle(p.ITALIC);
+      p.text("SE has the highest", seMaxPt.x - 45, seMaxPt.y - 30);
+      p.text("insurance cost", seMaxPt.x - 45, seMaxPt.y - 17);
+      p.textStyle(p.NORMAL);
+}
+
     if (hoveredPoint) {
       const tooltipX = hoveredPoint.x;
       const tooltipY = hoveredPoint.y - 60;
